@@ -10,17 +10,56 @@ function App() {
     setTodos((prev) => [{ id: Date.now(), ...todo }, ...prev])
   }
 
+  // const updateTodo = (id, todo) => {
+  //   setTodos((prev) => prev.map((prevTodo) => (prevTodo.id === id ? todo : prevTodo)));
+  // }
   const updateTodo = (id, todo) => {
-    setTodos((prev) => prev.map((prevTodo) => (prevTodo.id === id ? todo : prevTodo)));
+    setTodos((prev) => {
+      const newTodos = [];
+      for (let i = 0; i < prev.length; i++) {
+        if (prev[i].id === id) {
+          newTodos.push(todo);
+        } else {
+          newTodos.push(prev[i]);
+        }
+      }
+      return newTodos;
+    });
   }
 
+  // const deleteTodo = (id) => {
+  //   setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  // }
   const deleteTodo = (id) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+    setTodos((prev) => {
+      const newTodos = [];
+      for (let i = 0; i < prev.length; i++) {
+        if (prev[i].id !== id) {
+          newTodos.push(prev[i]);
+        }
+      }
+      return newTodos;
+    });
   }
 
+
+  // const toggleComplete = (id) => {
+  //   setTodos((prev) => prev.map((prevTodo) => prevTodo.id === id ? { ...prevTodo, completed: !prevTodo.completed } : prevTodo));
+  // }
   const toggleComplete = (id) => {
-    setTodos((prev) => prev.map((prevTodo) => prevTodo.id === id ? { ...prevTodo, completed: !prevTodo.completed } : prevTodo));
+    setTodos((prev) => {
+      const newTodos = [];
+      for (let i = 0; i < prev.length; i++) {
+        if (prev[i].id === id) {
+          newTodos.push({ ...prev[i], completed: !prev[i].completed });
+        } else {
+          newTodos.push(prev[i]);
+        }
+      }
+      return newTodos;
+    });
   }
+
 
   useEffect(() => {
     const todos = JSON.parse(localStorage.getItem("todos"));
